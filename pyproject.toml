@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "piloterr-haystack"
+version = "0.1.0"
+description = "Haystack integration for Piloterr: Google search and a web page fetcher with JavaScript rendering and unblocking."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Piloterr", email = "contact@piloterr.com" },
+]
+keywords = ["haystack", "piloterr", "web-scraping", "web-search", "fetcher", "rag"]
+classifiers = [
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+  "Typing :: Typed",
+]
+dependencies = [
+  "haystack-ai>=2.9",
+  "httpx>=0.27,<1",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "trafilatura>=2",
+  "ruff>=0.8,<1",
+]
+
+[project.urls]
+Homepage = "https://www.piloterr.com"
+Documentation = "https://github.com/piloterr/piloterr-haystack#readme"
+Repository = "https://github.com/piloterr/piloterr-haystack"
+Issues = "https://github.com/piloterr/piloterr-haystack/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/haystack_integrations"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/LICENSE", "/README.md", "/pyproject.toml"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = ["integration: live tests that need PILOTERR_API_KEY"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
